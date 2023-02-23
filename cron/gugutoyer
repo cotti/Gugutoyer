@@ -1,0 +1,4 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+0 * * * * root dotnet /gugu/Gugutoyer/src/Gugutoyer.Bot/bin/Release/net7.0/Gugutoyer.Bot.dll

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gugutoyer.Application\Gugutoyer.Application.csproj" />
+    <ProjectReference Include="..\Gugutoyer.Domain\Gugutoyer.Domain.csproj" />
+    <ProjectReference Include="..\Gugutoyer.Infra.Data\Gugutoyer.Infra.Data.csproj" />
+    <ProjectReference Include="..\Gugutoyer.Infra.Environment\Gugutoyer.Infra.Environment.csproj" />
+    <ProjectReference Include="..\Gugutoyer.Infra.Image\Gugutoyer.Infra.Image.csproj" />
+    <ProjectReference Include="..\Gugutoyer.Infra.MediaPoster\Gugutoyer.Infra.MediaPoster.csproj" />
+  </ItemGroup>
+
+</Project>
