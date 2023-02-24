@@ -6,6 +6,7 @@ using Gugutoyer.Application.Interfaces.MediaPoster;
 using Gugutoyer.Application.Services;
 using Gugutoyer.Domain.Entities;
 using Gugutoyer.Infra.CrossCutting.DependencyInjection;
+using Gugutoyer.Infra.MediaPoster.Mastodon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +35,11 @@ namespace Gugutoyer.Bot
 
         public static async Task RunBot(IServiceProvider services)
         {
+            if (services.GetService<MastodonMediaPosterRegistrationHelper>() is not null)
+            {
+                var helper = services.GetService<MastodonMediaPosterRegistrationHelper>();
+                helper.Register();
+            }
             var inputArgs = services.GetServices<IInputArgsService>();
             var mediaPoster = services.GetRequiredService<IMediaPoster>();
 

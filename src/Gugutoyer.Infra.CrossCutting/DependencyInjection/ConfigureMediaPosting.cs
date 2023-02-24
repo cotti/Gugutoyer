@@ -15,6 +15,7 @@ using Gugutoyer.Application.Services.ImageProcessing;
 using Gugutoyer.Infra.Image.ImageProvider.Web;
 using Gugutoyer.Application.Interfaces.MediaPoster;
 using Gugutoyer.Infra.MediaPoster.Twitter;
+using Gugutoyer.Infra.MediaPoster.Mastodon;
 
 namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
 {
@@ -22,6 +23,20 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
     {
         public static IServiceCollection AddMediaPoster(this IServiceCollection services, IConfiguration configuration)
         {
+            if (bool.Parse(configuration.GetSection("Register")["MastodonApp"]!))
+            {
+                services.AddSingleton(new MastodonMediaPosterRegistrationHelperSettings()
+                {
+                    AppName = configuration.GetSection("MastodonMediaPosterRegistrationHelperSettings")["AppName"],
+                    Instance = configuration.GetSection("MastodonMediaPosterRegistrationHelperSettings")["Instance"]
+                });
+                services.AddSingleton<MastodonMediaPosterRegistrationHelper>();
+            }
+            services.AddSingleton<MastodonMediaPosterSettings>();
+            services.AddHttpClient("mastodon",client =>
+            {
+            });
+            services.AddTransient<IMediaPoster, MastodonMediaPoster>();
             services.AddSingleton(new TwitterMediaPosterSettings()
             {
                 ApiKey = configuration.GetSection("TwitterMediaPosterSettings")["ApiKey"],
@@ -30,7 +45,7 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
                 AccessTokenSecret = configuration.GetSection("TwitterMediaPosterSettings")["AccessTokenSecret"],
                 MessageTargetHandlerId = configuration.GetSection("TwitterMediaPosterSettings")["MessageTargetHandlerId"]
             });
-            services.AddTransient<IMediaPoster, TwitterMediaPoster>();
+            //services.AddTransient<IMediaPoster, TwitterMediaPoster>();
             return services;
         }
     }
