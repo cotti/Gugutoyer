@@ -28,8 +28,7 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             _settings = settings;
             _inputArgs = inputArgs;
             _imageProcessor = imageProcessor;
-            var accessToken = new AuthenticationClient(_settings.Instance!).ConnectWithCode(_settings.AuthCode!).Result;
-            _client = new MastodonClient(_settings.Instance!, accessToken.AccessToken, httpClientFactory.CreateClient("mastodon"));
+            _client = new MastodonClient(_settings.Instance!, _settings.AccessToken!, httpClientFactory.CreateClient("mastodon"));
         }
         public async Task<bool> SendStatus(PalavraDTO word)
         {

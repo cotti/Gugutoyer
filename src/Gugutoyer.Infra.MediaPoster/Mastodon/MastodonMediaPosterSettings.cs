@@ -14,6 +14,7 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
         public string? ClientSecret { get; set; }
         public string? Instance { get; set; }
         public string? AuthCode { get; set; }
+        public string? AccessToken { get; set; }
 
         public MastodonMediaPosterSettings(IConfiguration configuration)
         {
@@ -21,6 +22,7 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             ClientSecret = configuration.GetSection("MastodonMediaPosterSettings")["ClientSecret"];
             Instance = configuration.GetSection("MastodonMediaPosterSettings")["Instance"];
             AuthCode = configuration.GetSection("MastodonMediaPosterSettings")["AuthCode"];
+            AccessToken = configuration.GetSection("MastodonMediaPosterSettings")["AccessToken"];
         }
     }
 }

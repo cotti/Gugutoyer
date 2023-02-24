@@ -19,7 +19,7 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             _httpClient = httpClientFactory.CreateClient("mastodon");
         }
 
-        public async Task Register()
+        public void Register()
         {
             AppRegistration? appRegistration = null;
             var authClient = new AuthenticationClient(_settings.Instance!);
@@ -31,6 +31,8 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             {
                 Console.WriteLine(ex.Message);
             }
+            authClient.AppRegistration = appRegistration;
+
             var settingsFile = File.ReadAllText(Path.Combine(System.IO.Directory.GetCurrentDirectory(), "appsettings.json"));
 
             var config = JsonConvert.DeserializeObject<dynamic>(settingsFile);
@@ -43,9 +45,11 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             Console.WriteLine(authClient.OAuthUrl());
             Console.WriteLine("Paste the token below:");
             
-            config!["MastodonMediaPosterSettings"]["AuthCode"] = Console.ReadLine();
+            string authCode = Console.ReadLine()!;
+            config!["MastodonMediaPosterSettings"]["AuthCode"] = authCode;
 
-
+            var accessToken = authClient.ConnectWithCode(authCode).Result;
+            config!["MastodonMediaPosterSettings"]["AccessToken"] = accessToken.AccessToken;
 
             File.WriteAllText(Path.Combine(System.IO.Directory.GetCurrentDirectory(), "appsettings.json"), JsonConvert.SerializeObject(config, Formatting.Indented));
         }
