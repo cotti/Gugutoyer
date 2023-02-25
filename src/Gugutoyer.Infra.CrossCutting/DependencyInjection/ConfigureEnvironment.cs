@@ -20,7 +20,7 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
         public static IServiceCollection AddCommandLineArgs(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IInputArgsService, CommandLineInputArgsService>();
-            services.AddSingleton(new SettingsInputSettings() { Index = int.Parse(configuration.GetSection("SettingsInput")["Index"]!), Word = configuration.GetSection("SettingsInput")["Word"] });
+            services.AddSingleton<SettingsInputSettings>();
             services.AddSingleton<IInputArgsService, SettingsInputArgsService>();
             return services;
         }

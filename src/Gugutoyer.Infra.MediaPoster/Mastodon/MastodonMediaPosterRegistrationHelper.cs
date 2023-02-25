@@ -22,10 +22,10 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
         public void Register()
         {
             AppRegistration? appRegistration = null;
-            var authClient = new AuthenticationClient(_settings.Instance!);
+            var authClient = new AuthenticationClient(_settings.Instance);
             try
             {
-                appRegistration = authClient.CreateApp(_settings.AppName!, Scope.Read | Scope.Write | Scope.Follow).Result;
+                appRegistration = authClient.CreateApp(_settings.AppName, Scope.Read | Scope.Write | Scope.Follow).Result;
             }
             catch (Exception ex)
             {

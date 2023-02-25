@@ -6,10 +6,12 @@ using Gugutoyer.Application.Interfaces.MediaPoster;
 using Gugutoyer.Infra.MediaPoster.Twitter;
 using Mastonet;
 using Mastonet.Entities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -78,9 +80,24 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             }
         }
 
-        public Task<bool> SendWarningMessage(int remaining)
+        public async Task<bool> SendWarningMessage(int remaining)
         {
-            throw new NotImplementedException();
+            if (remaining < 100 && (remaining % 5) == 0)
+            {
+                try
+                {
+                    var message = $"{_settings.MessageTargetHandlerId} | As mensagens estão começando a ficar escassas, tem tipo {remaining} agora. Faça uma filtragem.";
+                    await _client.PublishStatus(sensitive: false, status: message, visibility: Visibility.Private);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exception trying to send message:\n{e.Message}\nStack Trace:\n{e.StackTrace}");
+                    if (e.InnerException is not null)
+                        Console.WriteLine($"Inner Exception :\n{e.InnerException.Message}\nStack Trace:\n{e.InnerException.StackTrace}");
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

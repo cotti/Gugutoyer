@@ -23,29 +23,21 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
     {
         public static IServiceCollection AddMediaPoster(this IServiceCollection services, IConfiguration configuration)
         {
+            //Mastodon
+            services.AddHttpClient("mastodon", client =>
+            {
+            });
             if (bool.Parse(configuration.GetSection("Register")["MastodonApp"]!))
             {
-                services.AddSingleton(new MastodonMediaPosterRegistrationHelperSettings()
-                {
-                    AppName = configuration.GetSection("MastodonMediaPosterRegistrationHelperSettings")["AppName"],
-                    Instance = configuration.GetSection("MastodonMediaPosterRegistrationHelperSettings")["Instance"]
-                });
+                services.AddSingleton<MastodonMediaPosterRegistrationHelperSettings>();
                 services.AddSingleton<MastodonMediaPosterRegistrationHelper>();
             }
             services.AddSingleton<MastodonMediaPosterSettings>();
-            services.AddHttpClient("mastodon",client =>
-            {
-            });
             services.AddTransient<IMediaPoster, MastodonMediaPoster>();
-            services.AddSingleton(new TwitterMediaPosterSettings()
-            {
-                ApiKey = configuration.GetSection("TwitterMediaPosterSettings")["ApiKey"],
-                ApiSecret = configuration.GetSection("TwitterMediaPosterSettings")["ApiSecret"],
-                AccessToken = configuration.GetSection("TwitterMediaPosterSettings")["AccessToken"],
-                AccessTokenSecret = configuration.GetSection("TwitterMediaPosterSettings")["AccessTokenSecret"],
-                MessageTargetHandlerId = configuration.GetSection("TwitterMediaPosterSettings")["MessageTargetHandlerId"]
-            });
-            //services.AddTransient<IMediaPoster, TwitterMediaPoster>();
+
+            //Twitter
+            services.AddSingleton<TwitterMediaPosterSettings>();
+            services.AddTransient<IMediaPoster, TwitterMediaPoster>();
             return services;
         }
     }

@@ -19,7 +19,7 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
         public static IServiceCollection AddImageProcessing(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IImageProcessor, ImageProcessor>();
-            services.AddSingleton(new WebImageSettings() { ApiKey = configuration.GetSection("WebImageSettings")["ApiKey"], SearchEngineId = configuration.GetSection("WebImageSettings")["SearchEngineId"] });
+            services.AddSingleton<WebImageSettings>();
 
             var templates = new List<TemplateDTO>();
             foreach (var key in configuration.GetSection("Templates").GetChildren())

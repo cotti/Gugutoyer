@@ -37,7 +37,7 @@ namespace Gugutoyer.Bot
         {
             if (services.GetService<MastodonMediaPosterRegistrationHelper>() is not null)
             {
-                var helper = services.GetService<MastodonMediaPosterRegistrationHelper>();
+                var helper = services.GetRequiredService<MastodonMediaPosterRegistrationHelper>();
                 helper.Register();
             }
             var inputArgs = services.GetServices<IInputArgsService>();
