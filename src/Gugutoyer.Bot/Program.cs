@@ -6,9 +6,11 @@ using Gugutoyer.Application.Interfaces.MediaPoster;
 using Gugutoyer.Application.Services;
 using Gugutoyer.Domain.Entities;
 using Gugutoyer.Infra.CrossCutting.DependencyInjection;
+using Gugutoyer.Infra.MediaPoster.Mastodon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace Gugutoyer.Bot
 {
@@ -34,10 +36,21 @@ namespace Gugutoyer.Bot
 
         public static async Task RunBot(IServiceProvider services)
         {
+            if (services.GetService<MastodonMediaPosterRegistrationHelper>() is not null)
+            {
+                var helper = services.GetRequiredService<MastodonMediaPosterRegistrationHelper>();
+                helper.Register();
+            }
             var inputArgs = services.GetServices<IInputArgsService>();
-            var mediaPoster = services.GetRequiredService<IMediaPoster>();
+            var mediaPosters = services.GetServices<IMediaPoster>();
 
-            bool specialEdition = await RunSpecialEdition(inputArgs, mediaPoster);
+            if (mediaPosters.Count() == 0)
+            {
+                Console.WriteLine("No media posters available. Shutting down.");
+                return;
+            }
+
+            bool specialEdition = await RunSpecialEdition(inputArgs, mediaPosters);
 
             if (!specialEdition)
             {
@@ -47,31 +60,34 @@ namespace Gugutoyer.Bot
                 var remaining = await filtros.CountRemaining();
 
                 if (remaining <= 100)
-                    await mediaPoster.SendWarningMessage(remaining);
+                    foreach(var poster in mediaPosters)
+                        await poster.SendWarningMessage(remaining);
 
                 if (remaining > 0)
-                    await RunDictionary(filtros, palavras, mediaPoster);
+                    await RunDictionary(filtros, palavras, mediaPosters);
             }
         }
 
-        public static async Task<bool> RunSpecialEdition(IEnumerable<IInputArgsService> inputArgs, IMediaPoster mediaPoster)
+        public static async Task<bool> RunSpecialEdition(IEnumerable<IInputArgsService> inputArgs, IEnumerable<IMediaPoster> mediaPosters)
         {
             foreach (var arg in inputArgs)
             {
                 if (arg.HasValidArgs())
                 {
-                    await mediaPoster.SendStatus(new PalavraDTO() { Verbete = arg.GetWord() });
+                    foreach (var poster in mediaPosters)
+                        await poster.SendStatus(new PalavraDTO() { Verbete = arg.GetWord() });
                     return true;
                 }
             }
             return false;
         }
 
-        public static async Task RunDictionary(IFiltrosService filtros, IPalavrasService palavras, IMediaPoster mediaPoster)
+        public static async Task RunDictionary(IFiltrosService filtros, IPalavrasService palavras, IEnumerable<IMediaPoster> mediaPosters)
         {
             var nextWord = await filtros.GetNext();
             await palavras.UpdateUsed(new List<PalavraDTO>() { nextWord.Palavra! });
-            await mediaPoster.SendStatus(nextWord.Palavra!);
+            foreach (var poster in mediaPosters)
+                await poster.SendStatus(nextWord.Palavra!);
             await filtros.Delete(new List<FiltroDTO>() { nextWord });
         }
     }
