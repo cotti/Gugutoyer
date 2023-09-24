@@ -72,7 +72,7 @@ namespace Gugutoyer.Infra.Image.ImageProvider.Web
             string sourceLink = items.Current.Link;
             try
             {
-                using Task<byte[]> t = new Task<byte[]>(() =>
+                using Task<byte[]> t = new(() =>
                 {
                     try
                     {
