@@ -60,7 +60,7 @@ namespace Gugutoyer.Application.Services.Data
             var query = new GetNextQuery();
             var filtro = await _mediator.Send(query);
 
-            PalavrasUpdateCommand command = new PalavrasUpdateCommand()
+            PalavrasUpdateCommand command = new()
             {
                 ToUpdate = new List<Palavra>() { filtro.Palavra }
             };

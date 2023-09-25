@@ -30,15 +30,15 @@ namespace Gugutoyer.Application.Services.ImageProcessing
 
             MagickNET.SetTempDirectory(tempPath);
 
-            using MagickImage imgsource = new MagickImage(rawSourceImg);
-            using MagickImage imgsourceEffect = new MagickImage(imgsource.Clone());
+            using MagickImage imgsource = new(rawSourceImg);
+            using MagickImage imgsourceEffect = new(imgsource.Clone());
 
-            using MagickImageCollection imageCollection = new MagickImageCollection();
-            using MagickImageCollection sourceEffectCollection = new MagickImageCollection();
+            using MagickImageCollection imageCollection = new();
+            using MagickImageCollection sourceEffectCollection = new();
 
             _activeTemplate = _templates[new Random().Next(_templates.Count)]!;
 
-            using MagickImage imgtemplate = new MagickImage(Path.Combine(tempPath, _activeTemplate.File!),
+            using MagickImage imgtemplate = new(Path.Combine(tempPath, _activeTemplate.File!),
                 new MagickReadSettings()
                 {
                     BackgroundColor = MagickColors.Transparent
@@ -53,7 +53,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
 
             imageCollection.Add(imgtemplate);
 
-            using MagickImage res = new MagickImage(imageCollection.Merge());
+            using MagickImage res = new(imageCollection.Merge());
             res.Page = new MagickGeometry()
             {
                 Width = imgtemplate.Width,
@@ -63,7 +63,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
             return res.ToByteArray(MagickFormat.Jpg);
         }
 
-        private void PrepareSource(MagickImage imgsource, MagickImage imgsourceEffect, int templateWidth, int templateHeight)
+        private static void PrepareSource(MagickImage imgsource, MagickImage imgsourceEffect, int templateWidth, int templateHeight)
         {
             //Background effect prep. 
             //Crop creates the base for the blurred background to fill the void
@@ -131,7 +131,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
         }
         private void ApplyEffects(MagickImage image, PalavraDTO word)
         {
-            if (!(_activeTemplate is null) && !(image is null))
+            if (_activeTemplate is not null && image is not null)
             {
                 Draw(image, word, "Comic Sans MS", 60, "#662222FF", "#664433FF", "#111111FF", 3, 2, 2, true, Gravity.North, -5, true);
                 Draw(image, word, "Comic Sans MS", 60, "#5A2B92FF", "#F0FFFFFF", "#800080FF", 2, 0, 0, true, Gravity.North, -5, true);
@@ -169,7 +169,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
             image.Composite(textImage, gravity, compositeX, compositeY, CompositeOperator.SrcOver);
         }
 
-        private void Distort(MagickImage image)
+        private static void Distort(MagickImage image)
         {
             //Left-Up, Left-Down, Right-Up, Right-Down
             //Initial X, Initial Y, Final X, Final Y 
