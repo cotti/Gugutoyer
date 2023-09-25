@@ -4,6 +4,7 @@ using Gugutoyer.Application.Interfaces.ImageProcessing;
 using Gugutoyer.Application.Services.ImageProcessing;
 using Gugutoyer.Infra.Environment.Environment;
 using Gugutoyer.Infra.Image.ImageProvider.Web;
+using Gugutoyer.Infra.Image.MultipleImageProvider.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -29,7 +30,12 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
             services.AddHttpClient("imageprovider", client => 
             {
             });
+            services.AddHttpClient("imagescraper", client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
             services.AddTransient<IImageProvider, WebImageProvider>();
+            services.AddTransient<IMultipleImageProvider, ScraperMultipleImageProvider>();
             return services;
         }
     }
