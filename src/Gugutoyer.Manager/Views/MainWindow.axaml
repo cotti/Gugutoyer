@@ -3,6 +3,7 @@
         xmlns:vm="using:Gugutoyer.Manager.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="using:Gugutoyer.Manager.Models"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Gugutoyer.Manager.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -15,6 +16,27 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <StackPanel Orientation="Vertical">
+  <ItemsControl ItemsSource="{Binding ScrapedImages}">
+    <ItemsControl.ItemTemplate>
+      <DataTemplate DataType="m:ScrapedImageModel">
+        <Border Background="LightBlue" Margin="5">
+          <StackPanel Orientation="Vertical">
+          <Image Source="{Binding Image}" Height="32" Width="32"/>
+          <TextBlock Text="{Binding Url}" Margin="10" />
+          </StackPanel>
+        </Border>
+      </DataTemplate>
+    </ItemsControl.ItemTemplate>
+    <ItemsControl.ItemsPanel>
+      <ItemsPanelTemplate>
+        <WrapPanel />
+      </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+  </ItemsControl>
+
+  <Button Content="Buscar imagens" Command="{Binding GetImagesCommand}"/>
+    </StackPanel>
+
 
 </Window>

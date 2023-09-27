@@ -21,11 +21,12 @@ namespace Gugutoyer.Manager
             ServiceHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddDatabase(context.Configuration)
-                    .AddMapping(context.Configuration)
-                    .AddMediator(context.Configuration)
+                    services//.AddDatabase(context.Configuration)
+                    //.AddMapping(context.Configuration)
+                    //.AddMediator(context.Configuration)
                     .AddImageProcessing(context.Configuration)
-                    .AddMediaPoster(context.Configuration);
+                    //.AddMediaPoster(context.Configuration)
+                    ;
                 }).Build();
             ServiceHost.Start();
         }
