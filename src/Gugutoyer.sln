@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gugutoyer.Infra.CrossCuttin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gugutoyer.Bot", "Gugutoyer.Bot\Gugutoyer.Bot.csproj", "{C86162B8-1407-455C-A67A-A002C0BDA3B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gugutoyer.Infra.Environment", "Gugutoyer.Infra.Environment\Gugutoyer.Infra.Environment.csproj", "{B24741CB-DA4A-4A25-9A31-C70C22E0A1A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gugutoyer.Infra.Environment", "Gugutoyer.Infra.Environment\Gugutoyer.Infra.Environment.csproj", "{B24741CB-DA4A-4A25-9A31-C70C22E0A1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gugutoyer.Infra.Image", "Gugutoyer.Infra.Image\Gugutoyer.Infra.Image.csproj", "{6C9C2344-B055-463D-95EF-7ABE0F6D22EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gugutoyer.Infra.Image", "Gugutoyer.Infra.Image\Gugutoyer.Infra.Image.csproj", "{6C9C2344-B055-463D-95EF-7ABE0F6D22EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gugutoyer.Infra.MediaPoster", "Gugutoyer.Infra.MediaPoster\Gugutoyer.Infra.MediaPoster.csproj", "{C0BA714C-193C-4EC8-A39A-0585FD2D8D22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gugutoyer.Infra.MediaPoster", "Gugutoyer.Infra.MediaPoster\Gugutoyer.Infra.MediaPoster.csproj", "{C0BA714C-193C-4EC8-A39A-0585FD2D8D22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gugutoyer.Manager", "Gugutoyer.Manager\Gugutoyer.Manager.csproj", "{86BDAFC3-F1DB-4B7B-ABC6-918B50FB2864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{C0BA714C-193C-4EC8-A39A-0585FD2D8D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0BA714C-193C-4EC8-A39A-0585FD2D8D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0BA714C-193C-4EC8-A39A-0585FD2D8D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86BDAFC3-F1DB-4B7B-ABC6-918B50FB2864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86BDAFC3-F1DB-4B7B-ABC6-918B50FB2864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86BDAFC3-F1DB-4B7B-ABC6-918B50FB2864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86BDAFC3-F1DB-4B7B-ABC6-918B50FB2864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

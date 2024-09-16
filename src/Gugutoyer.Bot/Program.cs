@@ -44,7 +44,7 @@ namespace Gugutoyer.Bot
             var inputArgs = services.GetServices<IInputArgsService>();
             var mediaPosters = services.GetServices<IMediaPoster>();
 
-            if (mediaPosters.Count() == 0)
+            if (mediaPosters.Any())
             {
                 Console.WriteLine("No media posters available. Shutting down.");
                 return;
