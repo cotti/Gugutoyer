@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Gugutoyer.Infra.MediaPoster.Mastodon
 {
@@ -25,7 +26,7 @@ namespace Gugutoyer.Infra.MediaPoster.Mastodon
             var authClient = new AuthenticationClient(_settings.Instance);
             try
             {
-                appRegistration = authClient.CreateApp(_settings.AppName, Scope.Read | Scope.Write | Scope.Follow).Result;
+                appRegistration = authClient.CreateApp(appName: _settings.AppName, null, null, GranularScope.Read, GranularScope.Write, GranularScope.Follow).Result;
             }
             catch (Exception ex)
             {

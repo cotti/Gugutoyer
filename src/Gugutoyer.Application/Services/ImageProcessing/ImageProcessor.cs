@@ -63,7 +63,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
             return res.ToByteArray(MagickFormat.Jpg);
         }
 
-        private void PrepareSource(MagickImage imgsource, MagickImage imgsourceEffect, int templateWidth, int templateHeight)
+        private void PrepareSource(MagickImage imgsource, MagickImage imgsourceEffect, uint templateWidth, uint templateHeight)
         {
             //Background effect prep. 
             //Crop creates the base for the blurred background to fill the void
@@ -92,7 +92,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
             });
 
             //RePage() is required at this point.
-            imgsourceEffect.RePage();
+            imgsourceEffect.ResetPage();
 
             //Prep the actual image.
             //Scale it to touch the vertical extremities. Let the blurred background take care of the horizontal space.
@@ -108,7 +108,7 @@ namespace Gugutoyer.Application.Services.ImageProcessing
             });
 
             //RePage()
-            imgsource.RePage();
+            imgsource.ResetPage();
 
             //Cut any extra borders in the image. --Is this needed at this point? hmm...
             imgsource.Shave(
@@ -121,8 +121,8 @@ namespace Gugutoyer.Application.Services.ImageProcessing
             //Readapt the page and shave again. --Is this needed yet another time? hmm...
             imgsourceEffect.Page = new MagickGeometry()
             {
-                X = (templateWidth - imgsourceEffect.Width > 0) ? ((templateWidth - imgsourceEffect.Width) / 2) : 0,
-                Y = (templateHeight - imgsourceEffect.Height > 0) ? ((templateHeight - imgsourceEffect.Height) / 2) : 0
+                X = (int)((templateWidth - imgsourceEffect.Width > 0) ? ((templateWidth - imgsourceEffect.Width) / 2) : 0),
+                Y = (int)((templateHeight - imgsourceEffect.Height > 0) ? ((templateHeight - imgsourceEffect.Height) / 2) : 0)
             };
 
             imgsourceEffect.Shave(
