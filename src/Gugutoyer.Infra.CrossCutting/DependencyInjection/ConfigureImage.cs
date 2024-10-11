@@ -24,7 +24,7 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
 
             var templates = new List<TemplateDTO>();
             foreach (var key in configuration.GetSection("Templates").GetChildren())
-                templates.Add(new TemplateDTO() { File = key["File"], HorizontalCut = int.Parse(key["horizontalCut"]!), VerticalCut = int.Parse(key["verticalCut"]!) });
+                templates.Add(new TemplateDTO() { File = key["File"], HorizontalCut = uint.Parse(key["horizontalCut"]!), VerticalCut = uint.Parse(key["verticalCut"]!) });
             
             services.AddSingleton<IList<TemplateDTO>>(templates);
             services.AddHttpClient("imageprovider", client => 

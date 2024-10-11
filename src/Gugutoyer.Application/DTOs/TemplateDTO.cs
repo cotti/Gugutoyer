@@ -12,8 +12,8 @@ namespace Gugutoyer.Application.DTOs
         [JsonPropertyName("file")]
         public string? File { get; set; }
         [JsonPropertyName("horizontalcut")]
-        public int HorizontalCut { get; set; }
+        public uint HorizontalCut { get; set; }
         [JsonPropertyName("verticalcut")]
-        public int VerticalCut { get; set; }
+        public uint VerticalCut { get; set; }
     }
 }
