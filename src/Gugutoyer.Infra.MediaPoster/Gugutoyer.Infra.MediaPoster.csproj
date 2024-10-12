@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="CoreTweet" Version="2.0.0-beta.1" />
+    <PackageReference Include="FishyFlip" Version="1.8.80" />
     <PackageReference Include="Mastonet" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />

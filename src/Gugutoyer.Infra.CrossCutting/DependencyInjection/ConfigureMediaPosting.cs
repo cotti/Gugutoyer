@@ -16,6 +16,7 @@ using Gugutoyer.Infra.Image.ImageProvider.Web;
 using Gugutoyer.Application.Interfaces.MediaPoster;
 using Gugutoyer.Infra.MediaPoster.Twitter;
 using Gugutoyer.Infra.MediaPoster.Mastodon;
+using Gugutoyer.Infra.MediaPoster.Bluesky;
 
 namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
 {
@@ -35,9 +36,13 @@ namespace Gugutoyer.Infra.CrossCutting.DependencyInjection
             services.AddSingleton<MastodonMediaPosterSettings>();
             services.AddTransient<IMediaPoster, MastodonMediaPoster>();
 
-            //Twitter
+            ////Twitter
             services.AddSingleton<TwitterMediaPosterSettings>();
             services.AddTransient<IMediaPoster, TwitterMediaPoster>();
+
+            //Bluesky
+            services.AddSingleton<BlueskyMediaPosterSettings>();
+            services.AddTransient<IMediaPoster, BlueskyMediaPoster>();
             return services;
         }
     }
